@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width", intial-scale="1.0">
@@ -12,9 +12,10 @@
             <div id="imgBox">
                 <img src=" " id="qrImage">
             </div>
-            <button onclick="generateQR()">Generate QR Code</button>
+            <button id="generate"   onclick="generateQR()">Generate QR Code</button>
             <div id="qrCode">
-            <a id="downloadLink" download="qr_code.png";><button onclick="downloadQR">Download QR Code</button></a></div>
+            <a id="downloadLink" download="qr_code.png";>
+            <button  id="download"  onclick="downloadImage()">Download QR Code</button></a></div>
         </div>
         
         <script>
@@ -36,17 +37,43 @@ imgBox.classList.add("show-img");
         }
         
            </script>
-           <script>function downloadQR(){
-                let button = document.querySelector("body a");
-                button.addEventListener("click",()=>{
-                    const span = document.querySelector("a span");
-                    button.style.paddingRight="visible";
-                    setTimeout(()=>{
-                        span.style.visibility="hidden";
-                        button.style.transition="0px";
-                        button.style.paddingRight="0px";
-                    },1000);
-                }
-        }</script>
+           <script>
+        //    function downloadQR(){
+        //         let img = document.querySelector("imgBox");
+        //         button.addEventListener("click",()=>{
+        //             const span = document.querySelector("a span");
+        //             button.style.paddingRight="visible";
+        //             setTimeout(()=>{
+        //                 span.style.visibility="hidden";
+        //                 button.style.transition="0px";
+        //                 button.style.paddingRight="0px";
+        //             },1000);
+        //         }
+        // }
+        
+        function downloadImage() {
+            let imgBox = document.getElementById("imgBox");
+            let qrImage = document.getElementById("qrImage");
+            let qrText = document.getElementById("qrText");
+
+
+
+
+            var imageElement = document.getElementById('imgBox');
+            var imageURL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+imgBox.classList.add("show-img");
+            var imageName = imageURL.substring(imageURL.lastIndexOf('/') + 1);
+
+            var link = document.createElement('a');
+            link.href = imageURL;
+            link.download = imageName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        
+        
+        </script>
 </body>
 </html>
